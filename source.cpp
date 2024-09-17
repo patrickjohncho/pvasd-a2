@@ -79,7 +79,11 @@ int main() {
     vector<STUDENT_DATA> studentData = readStudentData(FILE_PATH);
 
     #ifdef _DEBUG
-        for (int i = 0; i < studentData.size(); i++) cout << studentData[i].firstName << ' ' << studentData[i].lastName << endl;
+        #ifdef PRE_RELEASE
+            for (int i = 0; i < studentData.size(); i++) cout << studentData[i].firstName << ' ' << studentData[i].lastName << ', ' << studentData[i].email << endl;
+        #else
+            for (int i = 0; i < studentData.size(); i++) cout << studentData[i].firstName << ' ' << studentData[i].lastName << endl;
+        #endif
     #endif
     
 	return 1;
