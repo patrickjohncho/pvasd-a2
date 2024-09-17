@@ -59,5 +59,9 @@ vector<STUDENT_DATA> readStudentData(const string& fileName) {
 int main() {
     vector<STUDENT_DATA> studentData = readStudentData(FILE_PATH);
 
+    #ifdef _DEBUG
+        for (int i = 0; i < studentData.size(); i++) cout << studentData[i].firstName << ' ' << studentData[i].lastName << endl;
+    #endif
+    
 	return 1;
 }
