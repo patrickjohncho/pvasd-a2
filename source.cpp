@@ -48,20 +48,27 @@ vector<STUDENT_DATA> readStudentData(const string& fileName) {
             //Read line to comma delimiter into firstName var
             if (getline(file, lastName, ',')) {
                 currStudent.lastName = lastName;
-                //Read line to newline into lastName var
-                if (getline(file, firstName)) {
+                //Get last name and email var
+                #ifdef PRE_RELEASE
+                string email;
+                if (getline(file, firstName, ',')) {
                     currStudent.firstName = firstName;
 
-                    #ifdef PRE_RELEASE
-                        string email;
-                        if (getline(file, email, ',')) {
-                            currStudent.email = email;
-                        }
-                    #endif
+                    if (getline(file, email)) {
+                        currStudent.email = email;
+                    }
 
                     //Add to vector
                     studentData.push_back(currStudent);
                 }
+                #else
+                    if (getline(file, firstName)) {
+                        currStudent.firstName = firstName;
+
+                        //Add to vector
+                        studentData.push_back(currStudent);
+                    }
+                #endif
             }
         }
         file.close();
@@ -80,7 +87,7 @@ int main() {
 
     #ifdef _DEBUG
         #ifdef PRE_RELEASE
-            for (int i = 0; i < studentData.size(); i++) cout << studentData[i].firstName << ' ' << studentData[i].lastName << ', ' << studentData[i].email << endl;
+            for (int i = 0; i < studentData.size(); i++) cout << studentData[i].firstName << ' ' << studentData[i].lastName << ' ' << studentData[i].email << endl;
         #else
             for (int i = 0; i < studentData.size(); i++) cout << studentData[i].firstName << ' ' << studentData[i].lastName << endl;
         #endif
