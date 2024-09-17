@@ -13,13 +13,24 @@
 
 using namespace std;
 
-const string FILE_PATH = "StudentData.txt";
+#define PRE_RELEASE
 
-//Student Data Struct
-struct STUDENT_DATA {
-    string firstName;
-    string lastName;
-};
+#ifdef PRE_RELEASE
+    const string VERSION = "Pre-Release";
+    const string FILE_PATH = "StudentData_Emails.txt";
+    struct STUDENT_DATA {
+        string firstName;
+        string lastName;
+        string email;
+    };
+#else
+    const string VERSION = "Standard";
+    const string FILE_PATH = "StudentData.txt";
+    struct STUDENT_DATA {
+        string firstName;
+        string lastName;
+    };
+#endif
 
 //Function to read the student data file
 vector<STUDENT_DATA> readStudentData(const string& fileName) {
@@ -41,6 +52,13 @@ vector<STUDENT_DATA> readStudentData(const string& fileName) {
                 if (getline(file, firstName)) {
                     currStudent.firstName = firstName;
 
+                    #ifdef PRE_RELEASE
+                        string email;
+                        if (getline(file, email, ',')) {
+                            currStudent.email = email;
+                        }
+                    #endif
+
                     //Add to vector
                     studentData.push_back(currStudent);
                 }
@@ -57,6 +75,7 @@ vector<STUDENT_DATA> readStudentData(const string& fileName) {
 }
 
 int main() {
+    cout << "Version: " << VERSION << endl;
     vector<STUDENT_DATA> studentData = readStudentData(FILE_PATH);
 
     #ifdef _DEBUG
